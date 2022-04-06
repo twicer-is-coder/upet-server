@@ -10,17 +10,30 @@ import path from 'path';
 import databaseInit from './database/db'
 import UserRoute from './routes/users.route';
 
-databaseInit();
+(async () => {
 
-const app = express();
-const PORT = process.env.PORT || 3030;
+    try {
+        await databaseInit();
+    } catch (err: unknown) {
+        const { message } = err as Error
+        console.error("Unable To Connect To DB: ", message);
+    }
 
-app.use("/api/users", UserRoute);
+    const app = express();
+    const PORT = process.env.PORT || 3030;
 
-app.get('/', (req, res) => {
-    res.send("Hello World!")
-})
+    app.use("/api/users", UserRoute);
 
-app
-    .use(express.static(path.join(__dirname, 'public')))
-    .listen(PORT, () => console.log(`Listening on ${PORT}`));
+    app.get('/', (req, res) => {
+        res.send("Hello World!")
+    })
+    
+    app.all('*', (req, res) => {
+        res.status(404).send('Invalid Endpoint!')
+    })
+
+    app
+        .use(express.static(path.join(__dirname, 'public')))
+        .listen(PORT, () => console.log(`Listening on ${PORT}`));
+})();
+

@@ -7,6 +7,6 @@ router.use(express.json());
 
 const controller = new UserController();
 
-router.post('/', controller.addUser)
+router.get('/', controller.addUser)
 
 export default router;

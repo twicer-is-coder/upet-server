@@ -2,16 +2,11 @@ import mongoose from 'mongoose'
 
 export default () => {
 
-    const USER = process.env.DB_USER
-    const DB_NAME = process.env.DB_NAME
-    const PASS = process.env.DB_PASS
+    const MONGO_INITDB_ROOT_USERNAME = process.env.MONGO_INITDB_ROOT_USERNAME
+    const MONGO_INITDB_ROOT_PASSWORD = process.env.MONGO_INITDB_ROOT_PASSWORD
     const HOST = process.env.DB_HOST
 
-    const db = mongoose.connect(`mongodb://${HOST}`, {
-        user: USER,
-        pass: PASS,
-        dbName: DB_NAME,
-    })
+    const db = mongoose.connect(`mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@${HOST}`)
 
     mongoose.connection.on('connected', () => {
         console.log('\x1b[36m%s\x1b[0m', 'DB Connected')

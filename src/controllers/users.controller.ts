@@ -1,15 +1,18 @@
 import { Request, Response } from 'express';
 
 import User from '../models/users.model'
+import { IUser } from '../../types/user'
 
 class UserController {
 
-    addUser = (_: Request, res: Response) => {
+    addUser = async (req: Request, res: Response) => {
         try {
-            res.json({ message: "success", user: "user" })
+            const user = await User.create(req.body as IUser)
+            res.json({ message: "Success.", user: user })
         } catch (err: unknown) {
             const { message } = err as Error
             res.status(500).json({ message })
+            console.log(err)
         }
     }
 

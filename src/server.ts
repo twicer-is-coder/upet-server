@@ -4,6 +4,8 @@ if (process.env.NODE_ENV !== 'production') {
     dotenv.config();
 }
 
+import cors from 'cors';
+
 import express from 'express';
 import path from 'path';
 
@@ -21,15 +23,16 @@ import UserRoute from './routes/users.route';
 
     const app = express();
     const PORT = process.env.PORT || 3030;
+    app.use(cors());
 
     app.use("/api/users", UserRoute);
 
     app.get('/', (req, res) => {
         res.send("Hello World!")
     })
-    
+
     app.all('*', (req, res) => {
-        res.status(404).send('Invalid Endpoint!')
+        res.status(404).json({message: "Invalid Endpoint."})
     })
 
     app

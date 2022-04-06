@@ -1,7 +1,5 @@
 import mongoose from 'mongoose'
 
-// const RoomsCollection = require('../models/rooms');
-
 export default () => {
 
     const USER = process.env.DB_USER
@@ -9,9 +7,11 @@ export default () => {
     const PASS = process.env.DB_PASS
     const HOST = process.env.DB_HOST
 
-    const CONNECTION_URL = `mongodb+srv://${USER}:${PASS}@${HOST}/${DB_NAME}?retryWrites=true&w=majority`
-
-    const db = mongoose.connect(CONNECTION_URL, {})
+    const db = mongoose.connect(`mongodb://${HOST}`, {
+        user: USER,
+        pass: PASS,
+        dbName: DB_NAME,
+    })
 
     mongoose.connection.on('connected', () => {
         console.log('\x1b[36m%s\x1b[0m', 'DB Connected')

@@ -11,7 +11,6 @@ const validateData: (req: Request, res: Response, next: NextFunction) => void = 
         else
             return false;
     }
-    console.log("bdy", req.body)
     const { email, firstName, lastName, password, phoneNo } = req.body as IUser
     const errors: string[] = [];
 

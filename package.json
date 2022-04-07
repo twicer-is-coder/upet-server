@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
+    "rimraf": "./node_modules/rimraf/bin.js",
     "start:dev": "nodemon",
     "start": "npm run build && node dist/server.js",
     "start:server": "ts-node ./src/server.ts",
